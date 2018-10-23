@@ -202,6 +202,7 @@ class OxyCSBot(ChatBot):
         'yep': 'yes',
         'no': 'no',
         'nope': 'no',
+        'hi': 'hi',
     }
 
     PROFESSORS = [
@@ -269,6 +270,8 @@ class OxyCSBot(ChatBot):
             return self.go_to_state('unknown_faculty')
         elif 'thanks' in tags:
             return self.finish('thanks')
+        elif 'hi' in tags:
+            return self.finish('hi')
         else:
             return self.finish('confused')
 
@@ -330,6 +333,9 @@ class OxyCSBot(ChatBot):
 
     def finish_thanks(self):
         return "You're welcome!"
+
+    def finish_hi(self):
+        return "Hello!"
 
 
 if __name__ == '__main__':

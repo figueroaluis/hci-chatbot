@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """A tag-based chatbot framework."""
-
+import random
 import re
 from collections import Counter
 
@@ -258,6 +258,29 @@ class OxyCSBot(ChatBot):
         }
         return office[professor]
 
+    def get_greetings(self):
+        """Get random greeting sentences.
+
+        Arguments:
+            void
+
+        Returns:
+            str: a greeting sentence
+
+        """
+        greet0 = "Hello."
+        greet1 = "What's up?"
+        greet2 = "Yo."
+        greet3 = "How you doing?"
+        greet4 = "How are you?"
+        greet5 = "Are you alright?"
+        greet6 = "How's it going?"
+
+        greetings = [greet0, greet1, greet2, greet3, greet4, greet4, greet5, greet6]
+
+        return random.choice(greetings)
+
+
     # "waiting" state functions
 
     def respond_from_waiting(self, message, tags):
@@ -335,7 +358,7 @@ class OxyCSBot(ChatBot):
         return "You're welcome!"
 
     def finish_hi(self):
-        return "Hello!"
+        return self.get_greetings()
 
 
 if __name__ == '__main__':

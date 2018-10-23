@@ -203,6 +203,8 @@ class OxyCSBot(ChatBot):
         'no': 'no',
         'nope': 'no',
         'hi': 'hi',
+        'hello': 'hi',
+        'what\'s up': 'hi',
     }
 
     PROFESSORS = [

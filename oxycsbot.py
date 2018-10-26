@@ -180,7 +180,8 @@ class OxyCSBot(ChatBot):
         'emotion_detection',
         'anecdote',
         'suggestion',
-        'feel_better_question'
+        'feel_better_question',
+        'feels_better',
     ]
 
     TAGS = {
@@ -295,11 +296,18 @@ class OxyCSBot(ChatBot):
             return self.finish_confused()
 
     def on_enter_emotion_detection(self):
-        return "Why do you feel that?"
+        response_emotion0 = "Oh no, I'm sorry about that:/ Why do you feel that way?"
+        response_emotion2 = "Sounds awful. Let it out, tell me more"
+        response_emotion1 = "I'm really sorry to hear that. What are you going to do?"
+
+        responses = [response_emotion0,response_emotion1, response_emotion2]
+        return random.choice(responses)
 
     def respond_from_emotion_detection(self, message, tags):
         if 'idk' in tags:
             return self.go_to_state('anecdote')
+        else:
+            return self.go_to_state('emotion_detection')
 
     def on_enter_hi(self):
         greet0 = "Hello."
@@ -337,7 +345,7 @@ class OxyCSBot(ChatBot):
 
     def respond_from_anecdote(self, message, tags):
         if 'yay' in tags:
-            return self.finish('success')
+            return self.go_to_state('feels_better')
         elif 'no' in tags:
             return self.go_to_state('suggestion')
         else:
@@ -362,9 +370,20 @@ class OxyCSBot(ChatBot):
 
     def respond_from_feel_better_question(self, message, tags):
         if 'yay' in tags:
-            return self.finish('success')
+            return self.go_to_state('feels_better')
         elif 'no' in tags:
             return self.go_to_state('suggestion')
+
+    def on_enter_feels_better(self):
+        return "Good to hear! Need anything else?"
+
+    def respond_from_feels_better(self, message, tags):
+        if 'no' in tags:
+            return self.finish('success')
+        elif 'yay' in tags:
+            return self.go_to_state('tell_me_more')
+
+
 
     #
     # def on_enter_specific_faculty(self):
@@ -416,7 +435,7 @@ class OxyCSBot(ChatBot):
     #     return f"{self.professor.capitalize()}'s office is in {self.get_office(self.professor)}"
 
     def finish_success(self):
-        return 'Good to hear! Need anything else?'
+        return 'Awesome:) Glad we could talk this out!'
 
     def finish_fail(self):
         return "I've tried my best but I still don't understand. Maybe try asking other students?"

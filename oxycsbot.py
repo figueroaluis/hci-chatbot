@@ -205,6 +205,16 @@ class OxyCSBot(ChatBot):
         'hi': 'hi',
         'hello': 'hi',
         'what\'s up': 'hi',
+
+        #state2
+
+        #state3
+        # state4 Anecdote
+        'I don\'t know': 'idk',
+        'I\'m confused': 'idk',
+        'What should I do': 'idk',
+        'idk': 'idk',
+
     }
 
     PROFESSORS = [
@@ -281,6 +291,13 @@ class OxyCSBot(ChatBot):
         greetings = [greet0, greet1, greet2, greet3, greet4, greet4, greet5, greet6]
 
         return random.choice(greetings)
+
+    def get_anecdote(self):
+        anecdote1 = "I'm sorry:/ I remember one time when my girlfriend was mad at me, I bought her chocolate. " \
+                    "I also told her she means so much to me, and that I know I messed up. I gave her time and space," \
+                    " and waited until she came back around. We're still together to this day. I just rambled..." \
+                    "but does this help? "
+        return anecdote1
 
 
     # "waiting" state functions

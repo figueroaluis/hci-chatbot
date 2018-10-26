@@ -180,6 +180,7 @@ class OxyCSBot(ChatBot):
         'specific_faculty',
         'unknown_faculty',
         'unrecognized_faculty',
+        'anecdote',
     ]
 
     TAGS = {
@@ -217,6 +218,12 @@ class OxyCSBot(ChatBot):
         'I\'m confused': 'idk',
         'What should I do': 'idk',
         'idk': 'idk',
+
+        # state 5 confirm help
+        'yes': 'yay',
+        'yep': 'yay',
+        'thank you': 'yay',
+        'of course' : 'yay',
 
     }
 
@@ -312,6 +319,8 @@ class OxyCSBot(ChatBot):
                 return self.go_to_state('hi')
             else:
                 return self.go_to_state('emotion_detection')
+        elif 'idk' in tags:
+            return self.go_to_state('anecdote')
 
         # self.professor = None
         # if 'office-hours' in tags:
@@ -344,6 +353,19 @@ class OxyCSBot(ChatBot):
 
     def respond_from_tell_me_more(self, message, tags):
         return self.go_to_state('emotion_detection')
+
+    def on_enter_anecdote(self):
+        anecdote1 = "I'm sorry:/ I remember one time when my girlfriend was mad at me, I bought her chocolate. " \
+                    "I also told her she means so much to me, and that I know I messed up. I gave her time and space," \
+                    " and waited until she came back around. We're still together to this day. I just rambled..." \
+                    "but does this help? "
+        return anecdote1
+
+    def respond_from_anecdote(self, message, tags):
+        if 'yay' in tags:
+            return self.finish('success')
+        else:
+            return self.finish('location')
     #
     # def on_enter_specific_faculty(self):
     #     response = '\n'.join([
@@ -394,13 +416,19 @@ class OxyCSBot(ChatBot):
         return f"{self.professor.capitalize()}'s office is in {self.get_office(self.professor)}"
 
     def finish_success(self):
-        return 'Great, let me know if you need anything else!'
+        return 'Good to hear! Need anything else?'
 
     def finish_fail(self):
         return "I've tried my best but I still don't understand. Maybe try asking other students?"
 
     def finish_thanks(self):
         return "You're welcome!"
+
+    def finish_hi(self):
+        return self.get_greetings()
+
+    #def finish_anecdote(self):
+        #return self.get_anecdote()
 
 
 if __name__ == '__main__':

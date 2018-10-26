@@ -286,7 +286,6 @@ class OxyCSBot(ChatBot):
         greet0 = "Hello."
         greet1 = "What's up?"
         greet2 = "Yo."
-
         question0 = "How you doing?"
         question1 = "How are you?"
         question2 = "Are you alright?"

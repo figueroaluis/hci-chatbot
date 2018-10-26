@@ -273,28 +273,6 @@ class OxyCSBot(ChatBot):
         }
         return office[professor]
 
-    def get_greetings(self):
-        """Get random greeting sentences.
-
-        Arguments:
-            void
-
-        Returns:
-            str: a greeting sentence
-
-        """
-        greet0 = "Hello."
-        greet1 = "What's up?"
-        greet2 = "Yo."
-        question0 = "How you doing?"
-        question1 = "How are you?"
-        question2 = "Are you alright?"
-        question3 = "How's it going?"
-
-        greetings = [greet0, greet1, greet2]
-        questions = [question0, question1, question2, question3]
-
-        return random.choice(greetings) + " " + random.choice(questions)
 
     def get_anecdote(self):
         anecdote1 = "I'm sorry:/ I remember one time when my girlfriend was mad at me, I bought her chocolate. " \
@@ -330,7 +308,18 @@ class OxyCSBot(ChatBot):
     # "specific_faculty" state functions
 
     def on_enter_hi(self):
-        return self.get_greetings()
+        greet0 = "Hello."
+        greet1 = "What's up?"
+        greet2 = "Yo."
+        question0 = "How you doing?"
+        question1 = "How are you?"
+        question2 = "Are you alright?"
+        question3 = "How's it going?"
+
+        greetings = [greet0, greet1, greet2]
+        questions = [question0, question1, question2, question3]
+
+        return random.choice(greetings) + " " + random.choice(questions)
 
     def respond_from_hi(self, message, tags):
         return self.go_to_state('tell_me_more')

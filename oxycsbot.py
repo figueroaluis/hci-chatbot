@@ -3,6 +3,7 @@
 import random
 import re
 from collections import Counter
+from specific_word_detection import emotion_word_found
 
 
 class ChatBot:
@@ -289,7 +290,15 @@ class OxyCSBot(ChatBot):
             if len(message) < 20:
                 return self.go_to_state('hi')
             else:
-                return self.go_to_state('emotion_detection')
+                if emotion_word_found(message):
+                    return self.go_to_state('emotion_detection')
+
+    def on_enter_emotion_detection(self):
+        return "Why do you feel that?"
+
+    def respond_from_emotion_detection(self, message, tags):
+        if 'idk' in tags:
+            return self.go_to_state('anecdote')
 
         # self.professor = None
         # if 'office-hours' in tags:

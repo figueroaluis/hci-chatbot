@@ -5,7 +5,7 @@ import spacy
 
 
 
-def find_emotion_word(sentence):
+def emotion_word_found(sentence):
 	emotion_word_bank = {}
 	with open("emotions.txt") as f:
 		for line in f:

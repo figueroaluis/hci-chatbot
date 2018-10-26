@@ -3,7 +3,7 @@ import spacy
 
 ############ Curse words to filter ################
 
-
+emotion_detected = ""
 
 def emotion_word_found(sentence):
 	emotion_word_bank = {}
@@ -17,8 +17,12 @@ def emotion_word_found(sentence):
 
 	for word in sentenceLower:
 		if word in emotion_word_bank:
+			emotion_detected = word
 			# print("This emotion was detected: ", word)
 			return True
+
+def get_emotion_word():
+	return emotion_detected
 
 
 # def find_curse_word():
@@ -36,4 +40,4 @@ def get_subject_of_sentence(input):
 # print(get_subject_of_sentence("She's such a bitch about it. I don't know what I'm gonna do about it"))
 
 
-print(find_emotion_word("I'm feeling annoyed"))
+# print(find_emotion_word("I'm feeling annoyed"))

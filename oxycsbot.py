@@ -178,35 +178,29 @@ class OxyCSBot(ChatBot):
         'hi',
         'tell_me_more',
         'emotion_detection',
-        'specific_faculty',
-        'unknown_faculty',
-        'unrecognized_faculty',
         'anecdote',
+        'suggestion'
     ]
 
     TAGS = {
-        # intent
-        'office hours': 'office-hours',
-        'help': 'office-hours',
-
-        # professors
-        'kathryn': 'kathryn',
-        'leonard': 'kathryn',
-        'justin': 'justin',
-        'li': 'justin',
-        'jeff': 'jeff',
-        'miller': 'jeff',
-        'celia': 'celia',
-        'hsing-hau': 'hsing-hau',
+        # # intent
+        # 'office hours': 'office-hours',
+        # 'help': 'office-hours',
+        #
+        # # professors
+        # 'kathryn': 'kathryn',
+        # 'leonard': 'kathryn',
+        # 'justin': 'justin',
+        # 'li': 'justin',
+        # 'jeff': 'jeff',
+        # 'miller': 'jeff',
+        # 'celia': 'celia',
+        # 'hsing-hau': 'hsing-hau',
 
         # generic
         'thanks': 'thanks',
         'okay': 'success',
         'bye': 'success',
-        'yes': 'yes',
-        'yep': 'yes',
-        'no': 'no',
-        'nope': 'no',
         'hi': 'hi',
         'hello': 'hi',
         'what\'s up': 'hi',
@@ -225,16 +219,20 @@ class OxyCSBot(ChatBot):
         'yep': 'yay',
         'thank you': 'yay',
         'of course' : 'yay',
+        # states 5 not helping
+        'not really': 'no',
+        'no': 'no',
+        'nope': 'no',
 
     }
 
-    PROFESSORS = [
-        'celia',
-        'hsing-hau',
-        'jeff',
-        'justin',
-        'kathryn',
-    ]
+    # PROFESSORS = [
+    #     'celia',
+    #     'hsing-hau',
+    #     'jeff',
+    #     'justin',
+    #     'kathryn',
+    # ]
 
     def __init__(self):
         """Initialize the OxyCSBot.
@@ -243,62 +241,57 @@ class OxyCSBot(ChatBot):
         professor has been identified.
         """
         super().__init__(default_state='waiting')
-        self.professor = None
+        # self.professor = None
 
-    def get_office_hours(self, professor):
-        """Find the office hours of a professor.
+    # def get_office_hours(self, professor):
+    #     """Find the office hours of a professor.
+    #
+    #     Arguments:
+    #         professor (str): The professor of interest.
+    #
+    #     Returns:
+    #         str: The office hours of that professor.
+    #     """
+    #     office_hours = {
+    #         'celia': 'F 12-1:45pm; F 2:45-4:00pm',
+    #         'hsing-hau': 'T 1-2:30pm; Th 10:30am-noon',
+    #         'jeff': 'unknown',
+    #         'justin': 'T 1-2pm; W noon-1pm; F 3-4pm',
+    #         'kathryn': 'MWF 4-5pm',
+    #     }
+    #     return office_hours[professor]
 
-        Arguments:
-            professor (str): The professor of interest.
-
-        Returns:
-            str: The office hours of that professor.
-        """
-        office_hours = {
-            'celia': 'F 12-1:45pm; F 2:45-4:00pm',
-            'hsing-hau': 'T 1-2:30pm; Th 10:30am-noon',
-            'jeff': 'unknown',
-            'justin': 'T 1-2pm; W noon-1pm; F 3-4pm',
-            'kathryn': 'MWF 4-5pm',
-        }
-        return office_hours[professor]
-
-    def get_office(self, professor):
-        """Find the office of a professor.
-
-        Arguments:
-            professor (str): The professor of interest.
-
-        Returns:
-            str: The office of that professor.
-        """
-        office = {
-            'celia': 'Swan 216',
-            'hsing-hau': 'Swan 302',
-            'jeff': 'Fowler 321',
-            'justin': 'Swan B102',
-            'kathryn': 'Swan B101',
-        }
-        return office[professor]
-
-
-    def get_anecdote(self):
-        anecdote1 = "I'm sorry:/ I remember one time when my girlfriend was mad at me, I bought her chocolate. " \
-                    "I also told her she means so much to me, and that I know I messed up. I gave her time and space," \
-                    " and waited until she came back around. We're still together to this day. I just rambled..." \
-                    "but does this help? "
-        return anecdote1
-
+    # def get_office(self, professor):
+    #     """Find the office of a professor.
+    #
+    #     Arguments:
+    #         professor (str): The professor of interest.
+    #
+    #     Returns:
+    #         str: The office of that professor.
+    #     """
+    #     office = {
+    #         'celia': 'Swan 216',
+    #         'hsing-hau': 'Swan 302',
+    #         'jeff': 'Fowler 321',
+    #         'justin': 'Swan B102',
+    #         'kathryn': 'Swan B101',
+    #     }
+    #     return office[professor]
 
     # "waiting" state functions
 
     def respond_from_waiting(self, message, tags):
-        if 'hi' in tags:
+        if emotion_word_found(message):
+            return self.go_to_state('emotion_detection')
+        elif 'hi' in tags:
             if len(message) < 20:
                 return self.go_to_state('hi')
             else:
                 if emotion_word_found(message):
                     return self.go_to_state('emotion_detection')
+        else:
+            return self.finish_confused()
 
     def on_enter_emotion_detection(self):
         return "Why do you feel that?"
@@ -306,22 +299,6 @@ class OxyCSBot(ChatBot):
     def respond_from_emotion_detection(self, message, tags):
         if 'idk' in tags:
             return self.go_to_state('anecdote')
-
-        # self.professor = None
-        # if 'office-hours' in tags:
-        #     for professor in self.PROFESSORS:
-        #         if professor in tags:
-        #             self.professor = professor
-        #             return self.go_to_state('specific_faculty')
-        #     return self.go_to_state('unknown_faculty')
-        # elif 'thanks' in tags:
-        #     return self.finish('thanks')
-        # elif 'hi' in tags:
-        #     return self.finish('hi')
-        # else:
-        #     return self.finish('confused')
-
-    # "specific_faculty" state functions
 
     def on_enter_hi(self):
         greet0 = "Hello."
@@ -360,8 +337,34 @@ class OxyCSBot(ChatBot):
     def respond_from_anecdote(self, message, tags):
         if 'yay' in tags:
             return self.finish('success')
+        elif 'no' in tags:
+            return self.go_to_state('suggestion')
         else:
-            return self.finish('location')
+            return self.go_to_state('tell_me_more')
+
+    def on_enter_suggestion(self):
+        suggestion0 = "Um. I have some idea if you need more help."
+        suggestion1 = "Why not talk to her first? "
+        more_suggestion0 = "It's not as hard as you think."
+        more_suggestion1 = "Tell her how you feel. It's better to communicate than thinking by yourself."
+
+        return random.choice([suggestion0, suggestion1]) + random.choice([more_suggestion0, more_suggestion1])
+
+    def respond_from_suggestion(self, message, tags):
+        if emotion_word_found(message):
+            return self.go_to_state('emotion_detection')
+        else:
+            return self.go_to_state('feel_better_question')
+
+    def on_enter_feel_better_question(selfs):
+        return "Do you feel better now?"
+
+    def respond_from_feel_better_queston(self, message, tags):
+        if 'yay' in tags:
+            return self.finish('success')
+        elif 'no' in tags:
+            return self.go_to_state('suggestion')
+
     #
     # def on_enter_specific_faculty(self):
     #     response = '\n'.join([
@@ -406,10 +409,10 @@ class OxyCSBot(ChatBot):
     # "finish" functions
 
     def finish_confused(self):
-        return "Sorry, I'm just a simple bot that understands a few things. You can ask me about office hours though!"
+        return "Sorry, what did you say?"
 
-    def finish_location(self):
-        return f"{self.professor.capitalize()}'s office is in {self.get_office(self.professor)}"
+    # def finish_location(self):
+    #     return f"{self.professor.capitalize()}'s office is in {self.get_office(self.professor)}"
 
     def finish_success(self):
         return 'Good to hear! Need anything else?'

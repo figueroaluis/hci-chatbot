@@ -306,8 +306,10 @@ class OxyCSBot(ChatBot):
     def respond_from_emotion_detection(self, message, tags):
         if 'idk' in tags:
             return self.go_to_state('anecdote')
-        else:
+        elif emotion_word_found(message):
             return self.go_to_state('emotion_detection')
+        else:
+            return self.go_to_state('tell_me_more')
 
     def on_enter_hi(self):
         greet0 = "Hello."

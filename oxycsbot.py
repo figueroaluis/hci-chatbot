@@ -283,14 +283,16 @@ class OxyCSBot(ChatBot):
         greet0 = "Hello."
         greet1 = "What's up?"
         greet2 = "Yo."
-        greet3 = "How you doing?"
-        greet4 = "How are you?"
-        greet5 = "Are you alright?"
-        greet6 = "How's it going?"
 
-        greetings = [greet0, greet1, greet2, greet3, greet4, greet4, greet5, greet6]
+        question0 = "How you doing?"
+        question1 = "How are you?"
+        question2 = "Are you alright?"
+        question3 = "How's it going?"
 
-        return random.choice(greetings)
+        greetings = [greet0, greet1, greet2]
+        questions = [question0, question1, question2, question3]
+
+        return random.choice(greetings) + " " + random.choice(questions)
 
     def get_anecdote(self):
         anecdote1 = "I'm sorry:/ I remember one time when my girlfriend was mad at me, I bought her chocolate. " \

@@ -275,7 +275,7 @@ class OxyCSBot(ChatBot):
         greet2 = "Yo."
         greet3 = "How you doing?"
         greet4 = "How are you?"
-        greet5 = "Are you alright?"
+        greet5 = "Hello. Are you alright?"
         greet6 = "How's it going?"
 
         greetings = [greet0, greet1, greet2, greet3, greet4, greet4, greet5, greet6]

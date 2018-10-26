@@ -179,7 +179,8 @@ class OxyCSBot(ChatBot):
         'tell_me_more',
         'emotion_detection',
         'anecdote',
-        'suggestion'
+        'suggestion',
+        'feel_better_question'
     ]
 
     TAGS = {
@@ -356,10 +357,10 @@ class OxyCSBot(ChatBot):
         else:
             return self.go_to_state('feel_better_question')
 
-    def on_enter_feel_better_question(selfs):
+    def on_enter_feel_better_question(self):
         return "Do you feel better now?"
 
-    def respond_from_feel_better_queston(self, message, tags):
+    def respond_from_feel_better_question(self, message, tags):
         if 'yay' in tags:
             return self.finish('success')
         elif 'no' in tags:

@@ -223,6 +223,9 @@ class OxyCSBot(ChatBot):
         'I\'m confused': 'idk',
         'What should I do': 'idk',
         'idk': 'idk',
+        #'no idea': 'idk',
+        #'fix': 'idk',
+        #'make it up': 'idk',
 
         # state 5 confirm help
         'yes': 'yay',
@@ -370,7 +373,6 @@ class OxyCSBot(ChatBot):
             return self.finish('thanks')
         else:
             return self.go_to_state('waiting')
-
 
     # "finish" functions
 

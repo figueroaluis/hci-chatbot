@@ -215,12 +215,17 @@ class OxyCSBot(ChatBot):
         'I\'m confused': 'idk',
         'What should I do': 'idk',
         'idk': 'idk',
+        #'no idea': 'idk',
+        #'fix': 'idk',
+        #'make it up': 'idk',
 
         # state 5 confirm help
         'yes': 'yay',
         'yep': 'yay',
         'thank you': 'yay',
-        'of course' : 'yay',
+        'of course': 'yay',
+        #'yeah':'yay',
+
         # states 5 not helping
         'not really': 'no',
         'no': 'no',
@@ -296,11 +301,12 @@ class OxyCSBot(ChatBot):
             return self.finish_confused()
 
     def on_enter_emotion_detection(self):
-        response_emotion0 = "Oh no, I'm sorry about that:/ Why do you feel that way?"
+        # "Oh no, I'm sorry about that:/ Why do you feel that way?"
+        response_emotion0 =  "Oh no, I'm sorry about that:/ Why do you feel that way?"
         response_emotion2 = "Sounds awful. Let it out, tell me more"
         response_emotion1 = "I'm really sorry to hear that. What are you going to do?"
 
-        responses = [response_emotion0,response_emotion1, response_emotion2]
+        responses = [response_emotion0, response_emotion1, response_emotion2]
         return random.choice(responses)
 
     def respond_from_emotion_detection(self, message, tags):

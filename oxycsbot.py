@@ -354,7 +354,10 @@ class OxyCSBot(ChatBot):
         advice0 = "Listent to what they have to say."
         advice1 = "Keep in mind. It's you two VS the problem. Not you VS her."
         advice2 = "I think you should drink excessively."
-        return random.choice([advice0, advice1, advice2]) + '\n' + "Does that help?"
+
+        ask0 = "Does that help?"
+        ask1 = "What do you think?"
+        return random.choice([advice0, advice1, advice2]) + '\n' + random.choice([ask0, ask1])
 
 
     def respond_from_advice(self, message, tags):
@@ -364,6 +367,8 @@ class OxyCSBot(ChatBot):
             return self.go_to_state('suggestion')
         elif 'thanks' in tags:
             return self.finish('thanks')
+        if 'adv' in tags:
+            return self.go_to_state('advice')
         else:
             return self.go_to_state('tell_me_more')
 

@@ -223,6 +223,7 @@ class OxyCSBot(ChatBot):
         'I\'m confused': 'idk',
         'What should I do': 'idk',
         'idk': 'idk',
+        'i dont know': 'idk',
         #'no idea': 'idk',
         #'fix': 'idk',
         #'make it up': 'idk',

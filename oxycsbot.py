@@ -182,6 +182,7 @@ class OxyCSBot(ChatBot):
         'suggestion',
         'feel_better_question',
         'feels_better',
+        'advice',
     ]
 
     TAGS = {
@@ -215,9 +216,7 @@ class OxyCSBot(ChatBot):
         'thank you': 'thanks',
         'good idea': 'thanks',
 
-        #state2
 
-        #state3
         # state4 Anecdote
         'I don\'t know': 'idk',
         'I\'m confused': 'idk',
@@ -241,6 +240,12 @@ class OxyCSBot(ChatBot):
         'not really': 'no',
         'no': 'no',
         'nope': 'no',
+
+        'advice': 'adv',
+        'suggestions': 'adv',
+        'ideas': 'adv',
+        'should i do': 'adv',
+
 
     }
 
@@ -320,6 +325,8 @@ class OxyCSBot(ChatBot):
     def respond_from_tell_me_more(self, message, tags):
         if 'idk' in tags:
             return self.go_to_state('anecdote')
+        elif 'adv' in tags:
+            return self.go_to_state('advice')
         else:
             self.go_to_state('emotion_detection')
 
@@ -331,6 +338,26 @@ class OxyCSBot(ChatBot):
         return anecdote1
 
     def respond_from_anecdote(self, message, tags):
+
+        if 'adv' in tags:
+            return self.go_to_state('advice')
+        elif 'yay' in tags:
+            return self.go_to_state('feels_better')
+        elif 'no' in tags:
+            return self.go_to_state('suggestion')
+        elif 'thanks' in tags:
+            return self.finish('thanks')
+        else:
+            return self.go_to_state('tell_me_more')
+
+    def on_enter_advice(self):
+        advice0 = "Listent to what they have to say."
+        advice1 = "Keep in mind. It's you two VS the problem. Not you VS her."
+        advice2 = "I think you should drink excessively."
+        return random.choice([advice0, advice1, advice2]) + '\n' + "Does that help?"
+
+
+    def respond_from_advice(self, message, tags):
         if 'yay' in tags:
             return self.go_to_state('feels_better')
         elif 'no' in tags:
@@ -339,6 +366,7 @@ class OxyCSBot(ChatBot):
             return self.finish('thanks')
         else:
             return self.go_to_state('tell_me_more')
+
 
     def on_enter_suggestion(self):
         suggestion0 = "Um. I have some idea if you need more help."
@@ -349,7 +377,9 @@ class OxyCSBot(ChatBot):
         return random.choice([suggestion0, suggestion1]) + random.choice([more_suggestion0, more_suggestion1])
 
     def respond_from_suggestion(self, message, tags):
-        if emotion_word_found(message):
+        if 'adv' in tags:
+            return self.go_to_state('advice')
+        elif emotion_word_found(message):
             return self.go_to_state('emotion_detection')
         elif 'thanks' in tags:
             return self.finish('thanks')

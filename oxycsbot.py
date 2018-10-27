@@ -226,6 +226,10 @@ class OxyCSBot(ChatBot):
         'no idea': 'idk',
         'fix': 'idk',
         'make it up': 'idk',
+        'i dont know': 'idk',
+        #'no idea': 'idk',
+        #'fix': 'idk',
+        #'make it up': 'idk',
 
         # state 5 confirm help
         'yes': 'yay',

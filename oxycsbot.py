@@ -223,14 +223,15 @@ class OxyCSBot(ChatBot):
         'I\'m confused': 'idk',
         'What should I do': 'idk',
         'idk': 'idk',
-        #'no idea': 'idk',
-        #'fix': 'idk',
-        #'make it up': 'idk',
+        'no idea': 'idk',
+        'fix': 'idk',
+        'make it up': 'idk',
 
         # state 5 confirm help
         'yes': 'yay',
         'yep': 'yay',
         'of course': 'yay',
+        'yeah': 'yay',
 
         # states 5 not helping
         'not really': 'no',
@@ -313,7 +314,10 @@ class OxyCSBot(ChatBot):
         return random.choice(responses)
 
     def respond_from_tell_me_more(self, message, tags):
-        return self.go_to_state('emotion_detection')
+        if 'idk' in tags:
+            return self.go_to_state('anecdote')
+        else:
+            self.go_to_state('emotion_detection')
 
     def on_enter_anecdote(self):
         anecdote1 = "I'm sorry:/ I remember one time when my girlfriend was mad at me, I bought her chocolate. " \

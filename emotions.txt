@@ -9,7 +9,7 @@ mad
 angry
 upset
 powerless
-sad 
+sad
 bored
 outraged
 content

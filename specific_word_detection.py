@@ -20,7 +20,7 @@ def emotion_word_found(sentence):
             emotion_detected = word
             # print("This emotion was detected: ", word)
             return True
-    return False
+
 
 
 def get_emotion_word(sentence):

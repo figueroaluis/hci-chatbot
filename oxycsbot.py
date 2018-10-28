@@ -117,7 +117,7 @@ class ChatBot:
         """Start a chat with the chatbot."""
         try:
             message = input('> ')
-            while message.lower() not in ('exit', 'quit'):
+            while message.lower() not in ('exit', 'quit','bye','goodbye','thanks i need to go','adios','okay thanks','okay bye'):
                 print()
                 print(f'{self.__class__.__name__}: {self.respond(message)}')
                 print()
@@ -228,6 +228,7 @@ class OxyCSBot(ChatBot):
         'fix': 'idk',
         'make it up': 'idk',
         'i dont know': 'idk',
+        'should i do': 'idk',
         #'no idea': 'idk',
         #'fix': 'idk',
         #'make it up': 'idk',
@@ -272,21 +273,24 @@ class OxyCSBot(ChatBot):
 
     def respond_from_waiting(self, message, tags):
         if emotion_word_found(message):
-            self.emotion_response = self.set_emotion_response(message)
+            # print(str(emotion_word_found(message)) + "\nfunction stuff: "+detect_emotion_phrase(message))
+            self.emotion_response = detect_emotion_phrase(message)
             return self.go_to_state('emotion_detection')
         elif 'hi' in tags:
             if len(message) < 20:
                 return self.go_to_state('hi')
             else:
                 if emotion_word_found(message):
+                    self.emotion_response = detect_emotion_phrase(message)
                     return self.go_to_state('emotion_detection')
         elif 'bye' in tags:
             return self.finish('success')
         else:
             return self.finish_confused()
 
-    def on_enter_emotion_detection(self):
 
+    def on_enter_emotion_detection(self):
+        # print("+++++++" + self.emotion_response)
         return self.emotion_response
 
 
@@ -294,6 +298,8 @@ class OxyCSBot(ChatBot):
         if 'idk' in tags:
             return self.go_to_state('anecdote')
         elif emotion_word_found(message):
+            # print(str(emotion_word_found(message)) + "\nfunction stuff: "+detect_emotion_phrase(message))
+            self.emotion_response = detect_emotion_phrase(message)
             return self.go_to_state('emotion_detection')
         else:
             return self.go_to_state('tell_me_more')
@@ -327,8 +333,11 @@ class OxyCSBot(ChatBot):
             return self.go_to_state('anecdote')
         elif 'adv' in tags:
             return self.go_to_state('advice')
+        elif emotion_word_found(message):
+            self.emotion_response = detect_emotion_phrase(message)
+            return self.go_to_state('emotion_detection')
         else:
-            self.go_to_state('emotion_detection')
+            return self.go_to_state('tell_me_more')
 
     def on_enter_anecdote(self):
         anecdote1 = "I'm sorry:/ I remember one time when my girlfriend was mad at me, I bought her chocolate. " \
@@ -367,7 +376,7 @@ class OxyCSBot(ChatBot):
             return self.go_to_state('suggestion')
         elif 'thanks' in tags:
             return self.finish('thanks')
-        if 'adv' in tags:
+        elif 'adv' in tags:
             return self.go_to_state('advice')
         else:
             return self.go_to_state('tell_me_more')
@@ -385,6 +394,7 @@ class OxyCSBot(ChatBot):
         if 'adv' in tags:
             return self.go_to_state('advice')
         elif emotion_word_found(message):
+            self.emotion_response = detect_emotion_phrase(message)
             return self.go_to_state('emotion_detection')
         elif 'thanks' in tags:
             return self.finish('thanks')

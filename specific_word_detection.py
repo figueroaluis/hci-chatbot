@@ -48,38 +48,45 @@ def detect_emotion_phrase(sentence):
     distances = get_word_distance(list)
     for dist in distances:
         for word in get_subject_of_sentence(sentence):
-            if (str(word).lower() == 'i'):
+            if (str(word).lower() == 'he'):
                 word = get_emotion_word(sentence)[0]
-                if dist < 15:
-                    return "Why are you " + word + "?"
+                if dist <= 15:
+                    return "Why is he " + word + "?"
                 else:
                     return "Okay, please tell me more"
             elif (str(word).lower() == 'she'):
                 word = get_emotion_word(sentence)[0]
-                if dist < 15:
+                if dist <= 15:
                     return "Why is she " + word + "?"
                 else:
                     return "Okay, please tell me more"
             elif (str(word).lower() == 'girlfriend'):
                 word = get_emotion_word(sentence)[0]
-                if dist < 15:
+                if dist <= 15:
                     return "Why is your girlfriend " + word + "?"
                 else:
                     return "Okay, please tell me more"
             elif (str(word).lower() == 'boyfriend'):
                 word = get_emotion_word(sentence)[0]
-                if dist < 15:
+                if dist <= 15:
                     return "Why is your boyfriend " + word + "?"
                 else:
                     return "Okay, please tell me more"
             elif (str(word).lower() == 'partner'):
                 word = get_emotion_word(sentence)[0]
-                if dist < 15:
+                if dist <= 15:
                     return "Why is your partner " + word + "?"
+                else:
+                    return "Okay, please tell me more"
+            elif (str(word).lower() == 'i'):
+                word = get_emotion_word(sentence)[0]
+                if dist <= 15:
+                    return "Why are you " + word + "?"
                 else:
                     return "Okay, please tell me more"
             else:
                 return "Okay, please tell me more"
+    return "Okay, please tell me more"
 
 
 def get_word_coord_list(sentence):
@@ -120,5 +127,5 @@ def get_subject_of_sentence(input):
     sub_tokens = [token for token in doc if (token.dep_ == "nsubj")]
     return sub_tokens
 
-print(detect_emotion_phrase("My girlfriend is mad at me"))
+print(detect_emotion_phrase("My partner is sad"))
 

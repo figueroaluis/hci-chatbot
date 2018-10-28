@@ -3,7 +3,7 @@
 import random
 import re
 from collections import Counter
-from specific_word_detection import emotion_word_found
+from specific_word_detection import emotion_word_found, detect_emotion_phrase
 
 
 class ChatBot:
@@ -282,13 +282,8 @@ class OxyCSBot(ChatBot):
         else:
             return self.finish_confused()
 
-    def on_enter_emotion_detection(self):
-        response_emotion0 = "Oh no, I'm sorry about that:/ Why do you feel that way?"
-        response_emotion2 = "Sounds awful. Let it out, tell me more"
-        response_emotion1 = "I'm really sorry to hear that. What are you going to do?"
-
-        responses = [response_emotion0, response_emotion1, response_emotion2]
-        return random.choice(responses)
+    def on_enter_emotion_detection(self, message):
+        return detect_emotion_phrase(message)
 
     def respond_from_emotion_detection(self, message, tags):
         if 'idk' in tags:

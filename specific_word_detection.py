@@ -1,5 +1,8 @@
 import spacy 
 
+###
+#TESTGIT
+###
 
 ############ Curse words to filter ################
 
@@ -26,8 +29,6 @@ def get_emotion_word():
 
 
 # def find_curse_word():
-
-
 
 
 def get_subject_of_sentence(input):

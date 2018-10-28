@@ -5,7 +5,11 @@ defeated
 rageful
 cheerful
 sympathy
-powerless 
+mad
+angry
+upset
+powerless
+sad 
 bored
 outraged
 content

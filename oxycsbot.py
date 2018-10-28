@@ -283,8 +283,8 @@ class OxyCSBot(ChatBot):
         else:
             return self.finish_confused()
 
-    # def on_enter_emotion_detection(self, message):
-    #     return detect_emotion_phrase(message)
+    def on_enter_emotion_detection(self):
+        return 0
 
     def respond_from_emotion_detection(self, message, tags):
         if 'idk' in tags:

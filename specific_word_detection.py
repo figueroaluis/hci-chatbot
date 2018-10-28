@@ -127,5 +127,5 @@ def get_subject_of_sentence(input):
     sub_tokens = [token for token in doc if (token.dep_ == "nsubj")]
     return sub_tokens
 
-print(detect_emotion_phrase("My partner is sad"))
+print(detect_emotion_phrase("I just don't know what to do because she is mad at me"))
 

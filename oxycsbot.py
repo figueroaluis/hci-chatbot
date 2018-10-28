@@ -270,6 +270,7 @@ class OxyCSBot(ChatBot):
 
     def respond_from_waiting(self, message, tags):
         if emotion_word_found(message):
+            detect_emotion_phrase(message)
             return self.go_to_state('emotion_detection')
         elif 'hi' in tags:
             if len(message) < 20:
@@ -282,8 +283,8 @@ class OxyCSBot(ChatBot):
         else:
             return self.finish_confused()
 
-    def on_enter_emotion_detection(self, message):
-        return detect_emotion_phrase(message)
+    # def on_enter_emotion_detection(self, message):
+    #     return detect_emotion_phrase(message)
 
     def respond_from_emotion_detection(self, message, tags):
         if 'idk' in tags:

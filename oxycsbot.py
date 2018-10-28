@@ -173,6 +173,8 @@ class ChatBot:
 class OxyCSBot(ChatBot):
     """A simple chatbot that directs students to office hours of CS professors."""
 
+    emotion_response = ""
+
     STATES = [
         'waiting',
         'hi',
@@ -270,7 +272,7 @@ class OxyCSBot(ChatBot):
 
     def respond_from_waiting(self, message, tags):
         if emotion_word_found(message):
-            detect_emotion_phrase(message)
+            self.emotion_response = self.set_emotion_response(message)
             return self.go_to_state('emotion_detection')
         elif 'hi' in tags:
             if len(message) < 20:
@@ -284,7 +286,7 @@ class OxyCSBot(ChatBot):
             return self.finish_confused()
 
     def on_enter_emotion_detection(self):
-        return 0
+        return self.emotion_response
 
     def respond_from_emotion_detection(self, message, tags):
         if 'idk' in tags:

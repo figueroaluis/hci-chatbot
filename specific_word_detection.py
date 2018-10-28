@@ -1,5 +1,7 @@
+
 import spacy
 import string
+
 
 ############ Curse words to filter ################
 
@@ -40,8 +42,6 @@ def get_emotion_word(sentence):
 
     return emotion_word_list
 
-
-# def find_curse_word():
 
 def detect_emotion_phrase(sentence):
     list = get_word_coord_list(sentence)

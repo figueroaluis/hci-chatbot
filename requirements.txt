@@ -1,4 +1,5 @@
 slackclient
 flask
 gunicorn
-spacy
+-U spacy
+python -m spacy.en.download
